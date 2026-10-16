@@ -1,0 +1,854 @@
+ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  font-family: 'Inter', sans-serif;
+  color: #f5f5f5;
+  background: #101010;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #101010;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 22px max(6%, calc((100% - 1200px) / 2));
+  border-bottom: 1px solid #292929;
+  background: #151515;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.logo-icone {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  background: #d6a84f;
+  color: #171717;
+  font-size: 25px;
+}
+
+.logo h1 {
+  margin: 0;
+  font-size: 17px;
+  letter-spacing: 1.5px;
+}
+
+.logo p {
+  margin: 5px 0 0;
+  color: #a5a5a5;
+  font-size: 12px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #c9c9c9;
+  font-size: 12px;
+}
+
+.status-bolinha {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #44cf80;
+}
+
+.atalho-carrinho {
+  padding: 12px 16px;
+  border: 1px solid #69552e;
+  border-radius: 10px;
+  background: #242016;
+  color: #e6c477;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.atalho-carrinho:hover {
+  background: #342b19;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 35px 25px 60px;
+}
+
+.banner {
+  position: relative;
+  overflow: hidden;
+  padding: 55px;
+  border: 1px solid #594722;
+  border-radius: 24px;
+  background: linear-gradient(115deg, #292217, #171717 72%);
+}
+
+.banner::after {
+  content: '◆';
+  position: absolute;
+  right: 7%;
+  top: 5%;
+  color: #d6a84f;
+  opacity: 0.10;
+  font-size: 220px;
+  transform: rotate(-15deg);
+}
+
+.banner-etiqueta {
+  display: inline-block;
+  padding: 8px 13px;
+  border-radius: 7px;
+  background: #d6a84f;
+  color: #171717;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.banner h2 {
+  position: relative;
+  z-index: 1;
+  margin: 22px 0 12px;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.12;
+}
+
+.banner p {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #b9b4a8;
+  font-size: 14px;
+}
+
+.catalogo {
+  margin-top: 42px;
+}
+
+.titulo-secao h2 {
+  margin: 0;
+  font-size: 25px;
+}
+
+.titulo-secao p {
+  margin: 8px 0 22px;
+  color: #969696;
+  font-size: 13px;
+}
+
+.campo-busca {
+  width: 100%;
+  padding: 16px 18px;
+  border: 1px solid #333;
+  border-radius: 12px;
+  outline: none;
+  background: #191919;
+  color: white;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.campo-busca:focus {
+  border-color: #d6a84f;
+}
+
+.categorias {
+  display: flex;
+  gap: 10px;
+  margin: 22px 0 25px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+
+.categoria {
+  flex-shrink: 0;
+  padding: 11px 18px;
+  border: 1px solid #333;
+  border-radius: 9px;
+  background: #191919;
+  color: #bdbdbd;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+
+.categoria:hover {
+  border-color: #d6a84f;
+}
+
+.categoria.ativa {
+  border-color: #d6a84f;
+  background: #d6a84f;
+  color: #171717;
+  font-weight: 700;
+}
+
+.grade-produtos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.produto {
+  overflow: hidden;
+  border: 1px solid #2c2c2c;
+  border-radius: 16px;
+  background: #181818;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.produto:hover {
+  transform: translateY(-4px);
+  border-color: #69552e;
+}
+
+.produto-imagem {
+  display: grid;
+  place-items: center;
+  min-height: 155px;
+  background: linear-gradient(135deg, #28251f, #1c1c1c);
+}
+
+.produto-imagem span {
+  font-size: 58px;
+}
+
+.produto-info {
+  padding: 17px;
+}
+
+.produto-categoria {
+  color: #d6a84f;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.produto-info h3 {
+  margin: 10px 0 7px;
+  font-size: 15px;
+}
+
+.produto-info > p {
+  min-height: 32px;
+  margin: 0;
+  color: #999;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.produto-rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.produto-rodape strong {
+  color: #e6c477;
+  font-size: 16px;
+}
+
+.botao-adicionar {
+  width: 37px;
+  height: 37px;
+  border: none;
+  border-radius: 10px;
+  background: #d6a84f;
+  color: #171717;
+  font-size: 25px;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.botao-adicionar:hover {
+  transform: scale(1.05);
+  background: #edc875;
+}
+
+.sem-produtos {
+  padding: 35px 0;
+  color: #999;
+  text-align: center;
+}
+
+.carrinho {
+  margin-top: 45px;
+  padding: 25px;
+  border: 1px solid #333;
+  border-radius: 17px;
+  background: #181818;
+  scroll-margin-top: 20px;
+}
+
+.carrinho .titulo-secao h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.item-carrinho {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid #303030;
+}
+
+.item-detalhes {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.item-detalhes strong {
+  font-size: 14px;
+}
+
+.item-detalhes span {
+  color: #999;
+  font-size: 12px;
+}
+
+.controle-quantidade {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.controle-quantidade button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #4b4029;
+  border-radius: 8px;
+  background: #292319;
+  color: #e6c477;
+  font-size: 19px;
+}
+
+.controle-quantidade span {
+  min-width: 15px;
+  text-align: center;
+}
+
+.subtotal {
+  color: #e6c477;
+  font-size: 14px;
+}
+
+.resumo-carrinho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 25px 0;
+  font-size: 14px;
+}
+
+.resumo-carrinho strong {
+  color: #e6c477;
+  font-size: 23px;
+}
+
+.botao-finalizar {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 10px;
+  background: #d6a84f;
+  color: #171717;
+  font-weight: 800;
+  transition: background 0.2s;
+}
+
+.botao-finalizar:hover {
+  background: #edc875;
+}
+
+.rodape {
+  padding: 25px;
+  border-top: 1px solid #292929;
+  color: #777;
+  text-align: center;
+  font-size: 11px;
+}
+
+@media (max-width: 950px) {
+  .grade-produtos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .banner {
+    padding: 40px;
+  }
+}
+
+@media (max-width: 520px) {
+  .topo {
+    padding: 17px 16px;
+  }
+
+  .logo h1 {
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  .logo-icone {
+    width: 39px;
+    height: 39px;
+  }
+
+  .status {
+    font-size: 10px;
+  }
+
+  .atalho-carrinho {
+    padding: 10px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  main {
+    padding: 22px 15px 40px;
+  }
+
+  .banner {
+    padding: 32px 24px;
+    border-radius: 17px;
+  }
+
+  .banner h2 {
+    font-size: 34px;
+  }
+
+  .banner p {
+    max-width: 230px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .banner::after {
+    right: -15%;
+    top: 25%;
+    font-size: 130px;
+  }
+
+  .titulo-secao h2 {
+    font-size: 22px;
+  }
+
+  .grade-produtos {
+    gap: 11px;
+  }
+
+  .produto-imagem {
+    min-height: 115px;
+  }
+
+  .produto-imagem span {
+    font-size: 43px;
+  }
+
+  .produto-info {
+    padding: 12px;
+  }
+
+  .produto-info h3 {
+    font-size: 13px;
+  }
+
+  .produto-info > p {
+    font-size: 11px;
+  }
+
+  .produto-rodape strong {
+    font-size: 13px;
+  }
+
+  .botao-adicionar {
+    width: 33px;
+    height: 33px;
+  }
+
+  .carrinho {
+    padding: 17px;
+  }
+
+  .item-carrinho {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+  }
+
+  .subtotal {
+    grid-column: 1;
+  }
+
+  .controle-quantidade {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    gap: 8px;
+  }
+
+  .resumo-carrinho strong {
+    font-size: 19px;
+  }
+}
+
+/* ===== VISUAL PROFISSIONAL HOOKAH29 ===== */
+
+.painel-admin {
+  background: #151515;
+  color: #ffffff;
+  padding: 30px;
+  margin: 25px auto;
+  max-width: 1100px;
+  border-radius: 16px;
+  border: 1px solid #303030;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.painel-admin h2 {
+  color: #39d353;
+  font-size: 28px;
+  margin-bottom: 25px;
+}
+
+.painel-admin button {
+  background: #238636;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 18px;
+  margin: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.painel-admin button:hover {
+  background: #2ea043;
+}
+
+.painel-admin input,
+.painel-admin select,
+.painel-admin textarea {
+  background: #222222;
+  color: #ffffff;
+  border: 1px solid #444444;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 5px;
+}
+
+.painel-admin input:focus,
+.painel-admin select:focus,
+.painel-admin textarea:focus {
+  outline: 2px solid #39d353;
+  border-color: #39d353;
+}
+/* ===== CARTÕES DE PEDIDOS HOOKAH29 ===== */
+
+.painel-admin .resumo-carrinho {
+  background: #202020;
+  color: #f5f5f5;
+  border: 1px solid #383838;
+  border-left: 5px solid #39d353;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 18px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.painel-admin .resumo-carrinho h3 {
+  color: #39d353;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.painel-admin .resumo-carrinho p {
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+.painel-admin .resumo-carrinho label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.painel-admin .resumo-carrinho select {
+  max-width: 100%;
+  cursor: pointer;
+}
+
+.painel-admin .resumo-carrinho strong {
+  color: #ffffff;
+}
+/* ===== RESUMO FINANCEIRO HOOKAH29 ===== */
+
+.painel-admin .resumo-carrinho > span {
+  display: block;
+  color: #bdbdbd;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.painel-admin .resumo-carrinho > strong {
+  display: block;
+  color: #39d353;
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.painel-admin .resumo-carrinho h3 {
+  border-bottom: 1px solid #383838;
+  padding-bottom: 12px;
+}
+/* ===== TEMA BRANCO - HOOKAH29 ===== */
+
+.painel-admin {
+  background: #ffffff;
+  color: #222222;
+  border: 1px solid #eeeeee;
+}
+
+.painel-admin h2 {
+  color: #222222;
+}
+
+.painel-admin .resumo-carrinho {
+  background: #ffffff;
+  color: #222222;
+  border: 1px solid #eeeeee;
+  border-left: 1px solid #eeeeee;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.painel-admin .resumo-carrinho h3,
+.painel-admin .resumo-carrinho > strong,
+.painel-admin .resumo-carrinho strong {
+  color: #222222;
+}
+
+.painel-admin .resumo-carrinho > span {
+  color: #666666;
+}
+
+.painel-admin button {
+  background: #ffffff;
+  color: #222222;
+  border: 1px solid #dddddd;
+}
+
+.painel-admin button:hover {
+  background: #f5f5f5;
+}
+
+.painel-admin input,
+.painel-admin select,
+.painel-admin textarea {
+  background: #ffffff;
+  color: #222222;
+  border: 1px solid #dddddd;
+}
+
+.painel-admin input:focus,
+.painel-admin select:focus,
+.painel-admin textarea:focus {
+  outline: 1px solid #bbbbbb;
+  border-color: #bbbbbb;
+}
+/* ===== TEMA ESCURO E BRANCO - HOOKAH29 ===== */
+
+.painel-admin {
+  background: #151515;
+  color: #ffffff;
+  border: 1px solid #333333;
+}
+
+.painel-admin h2 {
+  color: #ffffff;
+}
+
+.painel-admin .resumo-carrinho {
+  background: #222222;
+  color: #ffffff;
+  border: 1px solid #383838;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.painel-admin .resumo-carrinho h3,
+.painel-admin .resumo-carrinho > strong,
+.painel-admin .resumo-carrinho strong {
+  color: #ffffff;
+}
+
+.painel-admin .resumo-carrinho > span {
+  color: #dddddd;
+}
+
+.painel-admin .resumo-carrinho p,
+.painel-admin .resumo-carrinho label {
+  color: #ffffff;
+}
+
+.painel-admin button {
+  background: #333333;
+  color: #ffffff;
+  border: 1px solid #555555;
+  border-radius: 8px;
+}
+
+.painel-admin button:hover {
+  background: #444444;
+}
+
+.painel-admin input,
+.painel-admin select,
+.painel-admin textarea {
+  background: #252525;
+  color: #ffffff;
+  border: 1px solid #555555;
+}
+
+.painel-admin input::placeholder,
+.painel-admin textarea::placeholder {
+  color: #bbbbbb;
+}
+
+.painel-admin input:focus,
+.painel-admin select:focus,
+.painel-admin textarea:focus {
+  outline: 1px solid #aaaaaa;
+  border-color: #aaaaaa;
+}
+
+/* ===== LOGIN ADMINISTRATIVO HOOKAH29 ===== */
+
+.login-admin {
+  background: #151515;
+  color: #ffffff;
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 30px;
+  border: 1px solid #383838;
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.login-admin h2,
+.login-admin h3,
+.login-admin p,
+.login-admin label {
+  color: #ffffff;
+}
+
+.login-admin input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 12px 0;
+  padding: 12px;
+  background: #252525;
+  color: #ffffff;
+  border: 1px solid #555555;
+  border-radius: 8px;
+}
+
+.login-admin input::placeholder {
+  color: #bbbbbb;
+}
+
+.login-admin button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px;
+  background: #333333;
+  color: #ffffff;
+  border: 1px solid #555555;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.login-admin button:hover {
+  background: #444444;
+}
+
+/* ===== BOTÕES DE NAVEGAÇÃO HOOKAH29 ===== */
+
+/* Botão Painel Administrador */
+.botao-admin {
+  background: #d6a84f;
+  color: #000000;
+  border: 1px solid #d6a84f;
+  border-radius: 8px;
+  padding: 11px 18px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.botao-admin:hover {
+  background: #edc875;
+  color: #000000;
+}
+
+/* Botão Voltar à loja */
+.botao-voltar-loja {
+  background: #d6a84f;
+  color: #000000;
+  border: 1px solid #d6a84f;
+  border-radius: 8px;
+  padding: 11px 18px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.botao-voltar-loja:hover {
+  background: #edc875;
+  color: #000000;
+}
+.produto-foto {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}

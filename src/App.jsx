@@ -281,18 +281,16 @@ ${observacoes || 'Nenhuma'}
           </div>
         </div>
 
-<button
-  className="botao-admin"
-  onClick={() => {
-    if (adminAutenticado) {
+{adminAutenticado && (
+  <button
+    className="botao-admin"
+    onClick={() => {
       setMostrarAdmin(!mostrarAdmin)
-    } else {
-      setMostrarAdmin(true)
-    }
-  }}
->
-  {mostrarAdmin ? 'Voltar à loja' : 'Painel Administrativo'}
-</button>
+    }}
+  >
+    {mostrarAdmin ? 'Voltar à loja' : 'Painel Administrativo'}
+  </button>
+)}
 
         <a className="atalho-carrinho" href="#carrinho">
           🛒 Carrinho ({totalItens})

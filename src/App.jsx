@@ -81,6 +81,7 @@ function App() {
   const [categoriaSelecionada, setCategoriaSelecionada] = useState('Todos')
   const [marcaSelecionada, setMarcaSelecionada] = useState('')
   const [carrinho, setCarrinho] = useState([])
+  const [produtoAdicionado, setProdutoAdicionado] = useState(null)
 
   // Produtos carregados do Supabase
   const [produtos, setProdutos] = useState([])
@@ -240,20 +241,28 @@ function App() {
   }
 
   function adicionarAoCarrinho(produto) {
-    setCarrinho((carrinhoAtual) => {
-      const itemExistente = carrinhoAtual.find((item) => item.id === produto.id)
+  setCarrinho((carrinhoAtual) => {
+    const itemExistente = carrinhoAtual.find(
+      (item) => item.id === produto.id
+    )
 
-      if (itemExistente) {
-        return carrinhoAtual.map((item) =>
-          item.id === produto.id
-            ? { ...item, quantidade: item.quantidade + 1 }
-            : item
-        )
-      }
+    if (itemExistente) {
+      return carrinhoAtual.map((item) =>
+        item.id === produto.id
+          ? { ...item, quantidade: item.quantidade + 1 }
+          : item
+      )
+    }
 
-      return [...carrinhoAtual, { ...produto, quantidade: 1 }]
-    })
-  }
+    return [...carrinhoAtual, { ...produto, quantidade: 1 }]
+  })
+
+  setProdutoAdicionado(produto.id)
+
+  setTimeout(() => {
+    setProdutoAdicionado(null)
+  }, 800)
+}
 
   function alterarQuantidade(id, variacao) {
     setCarrinho((carrinhoAtual) =>
@@ -357,7 +366,12 @@ ${observacoes || 'Nenhuma'}
       {!mostrarAdmin && (
         <header className="topo">
           <div className="logo">
-            <span className="logo-icone">◆</span>
+            <img
+  src="/logo%20hookah29.jpeg"
+  alt="Logo HOOKAH29"
+  className="logo-imagem"
+/>
+
             <div>
               <h1>HOOKAH29</h1>
               <p>Delivery rápido e fácil</p>
@@ -766,12 +780,19 @@ ${observacoes || 'Nenhuma'}
                           <div className="produto-rodape">
                             <strong>{formatarPreco(produto.preco)}</strong>
                             <button
-                              className="botao-adicionar"
-                              onClick={() => adicionarAoCarrinho(produto)}
-                              aria-label={`Adicionar ${produto.nome} ao carrinho`}
-                            >
-                              +
-                            </button>
+  className={`botao-adicionar ${
+    produtoAdicionado === produto.id ? 'produto-adicionado' : ''
+  }`}
+  onClick={() => adicionarAoCarrinho(produto)}
+  aria-label={`Adicionar ${produto.nome} ao carrinho`}
+  title={
+    produtoAdicionado === produto.id
+      ? 'Produto adicionado!'
+      : `Adicionar ${produto.nome} ao carrinho`
+  }
+>
+  {produtoAdicionado === produto.id ? '✓' : '+'}
+</button>
                           </div>
                         </div>
                       </article>

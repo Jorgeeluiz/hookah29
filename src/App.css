@@ -852,3 +852,367 @@ main {
   object-fit: contain;
   display: block;
 }
+.logo-imagem {
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+.logo-imagem {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ========================================
+   MELHORIAS VISUAIS - HOOKAH29
+   ======================================== */
+
+/* Centralizar a frase do banner */
+.banner > p {
+  text-align: center;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.banner > h2 {
+  text-align: center;
+}
+
+.banner > .banner-etiqueta {
+  display: table;
+  margin: 0 auto;
+}
+
+/* Centralizar o título e a descrição dos produtos */
+.catalogo > .titulo-secao {
+  text-align: center;
+}
+
+.catalogo > .titulo-secao p {
+  margin-bottom: 24px;
+}
+
+/* Padronizar o espaço das imagens */
+.produto-imagem {
+  width: 100%;
+  height: 220px;
+  min-height: 220px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #202020;
+  cursor: pointer;
+}
+
+.produto-foto {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+/* Efeito ao passar o mouse sobre a imagem */
+.produto-imagem:hover .produto-foto {
+  transform: scale(1.06);
+}
+
+/* Animação ao clicar na imagem */
+.produto-imagem:active .produto-foto {
+  transform: scale(0.94);
+}
+
+/* Deixar os cartões mais uniformes */
+.produto {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.produto-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.produto-rodape {
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+/* Melhorar o botão de adicionar ao carrinho */
+.botao-adicionar {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 3px 10px rgba(214, 168, 79, 0.12);
+  transition:
+    transform 0.15s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.botao-adicionar:hover {
+  transform: scale(1.08);
+  background: #edc875;
+  box-shadow: 0 4px 14px rgba(214, 168, 79, 0.25);
+}
+
+.botao-adicionar:active {
+  transform: scale(0.88);
+}
+
+/* Destaque visual para o formulário do cliente */
+.formulario-pedido {
+  margin-top: 25px;
+  padding: 28px;
+  border: 1px solid #403722;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #1d1d1d, #151515);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
+}
+
+.formulario-pedido > h2 {
+  margin: 0 0 10px;
+  color: #e6c477;
+  font-size: 25px;
+}
+
+.formulario-pedido > p {
+  margin: 0 0 25px;
+  color: #b5b5b5;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.formulario-pedido label {
+  display: block;
+  margin: 20px 0 8px;
+  color: #e7e7e7;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Campos de preenchimento */
+.formulario-pedido input,
+.formulario-pedido select,
+.formulario-pedido textarea {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 13px 14px;
+  border: 1px solid #393939;
+  border-radius: 10px;
+  outline: none;
+  background: #101010;
+  color: #f5f5f5;
+  font: inherit;
+  font-size: 14px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.formulario-pedido textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.formulario-pedido input::placeholder,
+.formulario-pedido textarea::placeholder {
+  color: #858585;
+}
+
+.formulario-pedido input:focus,
+.formulario-pedido select:focus,
+.formulario-pedido textarea:focus {
+  border-color: #d6a84f;
+  background: #171717;
+  box-shadow: 0 0 0 3px rgba(214, 168, 79, 0.13);
+}
+
+/* Resumo do pedido dentro do formulário */
+.formulario-pedido .resumo-carrinho {
+  margin-top: 25px;
+  padding: 20px 0;
+  border-top: 1px solid #393939;
+  border-bottom: 1px solid #393939;
+}
+
+.formulario-pedido .resumo-carrinho strong {
+  color: #e6c477;
+}
+
+/* Botões do formulário */
+.formulario-pedido .botao-finalizar {
+  margin-top: 20px;
+  min-height: 52px;
+  border-radius: 11px;
+  font-size: 14px;
+  transition:
+    transform 0.15s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.formulario-pedido .botao-finalizar:hover:not(:disabled) {
+  background: #edc875;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 15px rgba(214, 168, 79, 0.18);
+}
+
+.formulario-pedido .botao-finalizar:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.formulario-pedido .botao-finalizar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.formulario-pedido .botao-voltar {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 13px;
+  border: 1px solid #454545;
+  border-radius: 10px;
+  background: transparent;
+  color: #e5e5e5;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.formulario-pedido .botao-voltar:hover {
+  border-color: #d6a84f;
+  background: #242016;
+}
+
+/* Acessibilidade: foco visível ao navegar por teclado */
+.botao-adicionar:focus-visible,
+.botao-finalizar:focus-visible,
+.formulario-pedido .botao-voltar:focus-visible {
+  outline: 2px solid #edc875;
+  outline-offset: 3px;
+}
+
+/* Ajustes para celulares */
+@media (max-width: 520px) {
+  .produto-imagem {
+    height: 155px;
+    min-height: 155px;
+    padding: 10px;
+  }
+
+  .formulario-pedido {
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+
+  .formulario-pedido > h2 {
+    font-size: 22px;
+  }
+
+  .formulario-pedido input,
+  .formulario-pedido select,
+  .formulario-pedido textarea {
+    font-size: 16px;
+  }
+
+  .banner > h2 {
+    font-size: 30px;
+  }
+
+  .banner > p {
+    max-width: 100%;
+    text-align: center;
+  }
+}
+
+/* Efeito visual ao adicionar produto ao carrinho */
+.botao-adicionar {
+  position: relative;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.botao-adicionar:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(214, 168, 79, 0.4);
+}
+
+.botao-adicionar:active {
+  transform: scale(0.88);
+  background-color: #ffffff;
+  color: #151515;
+}
+
+/* Destaque ao passar o mouse sobre um produto */
+.produto {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.produto:hover {
+  transform: translateY(-4px);
+}
+
+/* Efeito de clique na imagem */
+.produto-imagem {
+  overflow: hidden;
+}
+
+.produto-foto {
+  transition: transform 0.3s ease;
+}
+
+.produto-imagem:hover .produto-foto {
+  transform: scale(1.06);
+}
+
+/* Confirmação visual de produto adicionado */
+.botao-adicionar.produto-adicionado {
+  background-color: #35a853;
+  color: #ffffff;
+  transform: scale(1.12);
+  box-shadow: 0 0 15px rgba(53, 168, 83, 0.35);
+}
+
+/* Centralizar a frase de apresentação do banner */
+.banner > p {
+  width: 100%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Centralizar a frase do banner em celulares */
+@media (max-width: 768px) {
+  .banner > p {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    text-align: center !important;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+  }
+}

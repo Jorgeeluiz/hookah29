@@ -1216,3 +1216,228 @@ main {
     box-sizing: border-box;
   }
 }
+
+/* PADRONIZAÇÃO DAS FOTOS DOS PRODUTOS HOOKAH29 */
+
+.produto-imagem {
+  width: 100%;
+  height: 220px;
+  min-height: 220px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: #202020;
+}
+
+.produto-foto {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+/* PADRÃO PARA CELULARES */
+
+@media (max-width: 520px) {
+  .produto-imagem {
+    height: 160px;
+    min-height: 160px;
+    padding: 10px;
+  }
+}
+
+/* =====================================
+   HOOKAH29 - FORMULÁRIO PROFISSIONAL
+   ===================================== */
+
+/* Área geral do formulário */
+.checkout,
+.formulario-checkout {
+  width: 100%;
+  max-width: 650px;
+  margin: 25px auto;
+  padding: 25px;
+  background: #181818;
+  border: 1px solid #333333;
+  border-radius: 16px;
+  box-sizing: border-box;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* Títulos do formulário */
+.checkout h2,
+.formulario-checkout h2 {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 22px;
+  text-align: center;
+}
+
+/* Textos dos campos */
+.checkout label,
+.formulario-checkout label {
+  display: block;
+  margin: 18px 0 8px;
+  color: #eeeeee;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Campos de texto, seleção e observações */
+.checkout input,
+.checkout select,
+.checkout textarea,
+.formulario-checkout input,
+.formulario-checkout select,
+.formulario-checkout textarea {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  margin: 0;
+  background: #252525;
+  color: #ffffff;
+  border: 1px solid #444444;
+  border-radius: 9px;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Destaque ao selecionar um campo */
+.checkout input:focus,
+.checkout select:focus,
+.checkout textarea:focus,
+.formulario-checkout input:focus,
+.formulario-checkout select:focus,
+.formulario-checkout textarea:focus {
+  border-color: #35a853;
+  box-shadow: 0 0 0 3px rgba(53, 168, 83, 0.15);
+}
+
+/* Texto de exemplo dentro dos campos */
+.checkout input::placeholder,
+.checkout textarea::placeholder,
+.formulario-checkout input::placeholder,
+.formulario-checkout textarea::placeholder {
+  color: #999999;
+}
+
+/* Área de observações */
+.checkout textarea,
+.formulario-checkout textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Resumo do pedido */
+.checkout .resumo-carrinho,
+.formulario-checkout .resumo-carrinho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 25px;
+  padding: 18px;
+  background: #252525;
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  color: #ffffff;
+}
+
+/* Valor total */
+.checkout .resumo-carrinho strong,
+.formulario-checkout .resumo-carrinho strong {
+  color: #45d36a;
+  font-size: 22px;
+}
+
+/* Botão de finalizar pedido */
+.checkout .botao-finalizar,
+.formulario-checkout .botao-finalizar {
+  display: block;
+  width: 100%;
+  min-height: 54px;
+  margin-top: 20px;
+  padding: 14px;
+  background: #25a849;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+/* Efeito ao passar o mouse */
+.checkout .botao-finalizar:hover,
+.formulario-checkout .botao-finalizar:hover {
+  background: #1e8e3e;
+  transform: translateY(-2px);
+}
+
+/* Botão indisponível */
+.checkout .botao-finalizar:disabled,
+.formulario-checkout .botao-finalizar:disabled {
+  background: #555555;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Ajustes para celulares */
+@media (max-width: 520px) {
+  .checkout,
+  .formulario-checkout {
+    width: 100%;
+    margin: 15px auto;
+    padding: 18px;
+    border-radius: 12px;
+  }
+
+  .checkout h2,
+  .formulario-checkout h2 {
+    font-size: 21px;
+  }
+
+  .checkout input,
+  .checkout select,
+  .checkout textarea,
+  .formulario-checkout input,
+  .formulario-checkout select,
+  .formulario-checkout textarea {
+    font-size: 16px;
+  }
+
+  .checkout .resumo-carrinho,
+  .formulario-checkout .resumo-carrinho {
+    padding: 14px;
+  }
+}
+
+/* LOGO HOOKAH29 - TAMANHO PROFISSIONAL */
+
+.logo-imagem {
+  width: 65px;
+  height: 65px;
+  max-width: 65px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Ajuste para celulares */
+@media (max-width: 520px) {
+  .logo-imagem {
+    width: 48px;
+    height: 48px;
+    max-width: 48px;
+  }
+}

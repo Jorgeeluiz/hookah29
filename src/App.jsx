@@ -367,7 +367,7 @@ ${observacoes || 'Nenhuma'}
         <header className="topo">
           <div className="logo">
             <img
-  src="/logo%20hookah29.jpeg"
+src="/logo-hookah29.png"
   alt="Logo HOOKAH29"
   className="logo-imagem"
 />

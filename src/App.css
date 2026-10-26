@@ -1441,3 +1441,64 @@ main {
     max-width: 48px;
   }
 }
+/* =========================================
+   HOOKAH29 - BOTÕES DE GERENCIAMENTO
+   ========================================= */
+
+.acoes-produto-admin {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+  min-width: 190px;
+}
+
+.acoes-produto-admin strong {
+  color: #e6c477 !important;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.acoes-produto-admin button {
+  display: block;
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 14px;
+  margin: 0;
+  border: 1px solid #555555;
+  border-radius: 8px;
+  background: #292929;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.acoes-produto-admin button:hover {
+  background: #404040;
+}
+
+.acoes-produto-admin button:last-child {
+  border-color: #b88b35;
+  background: #d6a84f;
+  color: #151515;
+}
+
+.acoes-produto-admin button:last-child:hover {
+  background: #edc875;
+}
+
+@media (max-width: 520px) {
+  .acoes-produto-admin {
+    width: 100%;
+    min-width: 0;
+    align-items: stretch;
+    margin-top: 15px;
+  }
+
+  .acoes-produto-admin button {
+    width: 100%;
+  }
+}

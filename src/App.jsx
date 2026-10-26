@@ -152,7 +152,6 @@ function App() {
       const { data, error } = await supabase
         .from('produtos')
         .select('*')
-        .eq('ativo', true)
         .order('id', { ascending: true })
 
       if (error) {
@@ -240,7 +239,81 @@ function App() {
     alert('Foto do produto atualizada com sucesso!')
   }
 
+  function limparFormularioProduto() {
+    setProdutoEditando(null)
+    setNomeProduto('')
+    setMarcaProduto('')
+    setDescricaoProduto('')
+    setPrecoProduto('')
+    setCategoriaProduto('Essência')
+    setEmojiProduto('📦')
+    setImagemUrlProduto('')
+    setMostrarFormularioProduto(false)
+  }
+
+  function iniciarEdicaoProduto(produto) {
+    setProdutoEditando(produto.id)
+    setNomeProduto(produto.nome || '')
+    setMarcaProduto(produto.marca || '')
+    setDescricaoProduto(produto.descricao || '')
+    setPrecoProduto(String(produto.preco ?? ''))
+    setCategoriaProduto(produto.categoria || 'Essência')
+    setEmojiProduto(produto.emoji || '📦')
+    setImagemUrlProduto(produto.imagem_url || '')
+    setMostrarFormularioProduto(true)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+ async function alternarDisponibilidade(produto) {
+  const novoStatus = !produto.ativo
+
+  try {
+    const { data, error } = await supabase
+      .from('produtos')
+      .update({ ativo: novoStatus })
+      .eq('id', produto.id)
+      .select()
+      .maybeSingle()
+
+    if (error) {
+      console.error('Erro ao alterar disponibilidade:', error)
+
+      alert(
+        `Erro ao alterar disponibilidade:\n\n${error.message}\n\nCódigo: ${error.code || 'Não informado'}`
+      )
+      return
+    }
+
+    if (!data) {
+      alert(
+        'Nenhum produto foi atualizado. Verifique se você está conectado ao painel administrativo e se tem permissão para editar este produto.'
+      )
+      return
+    }
+
+    setProdutos((atuais) =>
+      atuais.map((item) =>
+        item.id === produto.id
+          ? { ...item, ...data, preco: Number(data.preco) }
+          : item
+      )
+    )
+
+    alert(
+      novoStatus
+        ? 'Produto reativado com sucesso!'
+        : 'Produto marcado como indisponível.'
+    )
+  } catch (erro) {
+    console.error('Erro inesperado:', erro)
+    alert(`Erro inesperado: ${erro.message}`)
+  }
+}
   function adicionarAoCarrinho(produto) {
+    if (!produto.ativo) {
+      alert('Este produto está indisponível no momento.')
+      return
+    }
   setCarrinho((carrinhoAtual) => {
     const itemExistente = carrinhoAtual.find(
       (item) => item.id === produto.id
@@ -519,7 +592,7 @@ src="/logo-hookah29.png"
                 onSubmit={async (evento) => {
                   evento.preventDefault()
 
-                  const novoProduto = {
+                  const dadosProduto = {
                     nome: nomeProduto.trim(),
                     marca: marcaProduto.trim(),
                     descricao: descricaoProduto.trim(),
@@ -527,30 +600,41 @@ src="/logo-hookah29.png"
                     categoria: categoriaProduto,
                     emoji: emojiProduto.trim() || '📦',
                     imagem_url: imagemUrlProduto.trim(),
-                    ativo: true,
                   }
 
-                  const { data, error } = await supabase
-                    .from('produtos')
-                    .insert([novoProduto])
-                    .select()
-                    .single()
+                  const resultado = produtoEditando
+                    ? await supabase
+                        .from('produtos')
+                        .update(dadosProduto)
+                        .eq('id', produtoEditando)
+                        .select()
+                        .single()
+                    : await supabase
+                        .from('produtos')
+                        .insert([{ ...dadosProduto, ativo: true }])
+                        .select()
+                        .single()
+
+                  const { data, error } = resultado
 
                   if (error) {
-                    console.error('Erro ao cadastrar produto:', error)
-                    alert('Não foi possível cadastrar o produto. Verifique o acesso ao Supabase.')
+                    console.error('Erro ao salvar produto:', error)
+                    alert('Não foi possível salvar o produto. Verifique o acesso ao Supabase.')
                     return
                   }
 
-                  setProdutos((atuais) => [...atuais, { ...data, preco: Number(data.preco) }])
-                  setNomeProduto('')
-                  setMarcaProduto('')
-                  setDescricaoProduto('')
-                  setPrecoProduto('')
-                  setCategoriaProduto('Essência')
-                  setEmojiProduto('📦')
-                  setImagemUrlProduto('')
-                  alert('Produto cadastrado com sucesso!')
+                  setProdutos((atuais) =>
+                    produtoEditando
+                      ? atuais.map((item) =>
+                          item.id === data.id
+                            ? { ...item, ...data, preco: Number(data.preco) }
+                            : item
+                        )
+                      : [...atuais, { ...data, preco: Number(data.preco) }]
+                  )
+
+                  limparFormularioProduto()
+                  alert(produtoEditando ? 'Produto atualizado com sucesso!' : 'Produto cadastrado com sucesso!')
                 }}
               >
                 <label>Marca</label>
@@ -617,7 +701,12 @@ src="/logo-hookah29.png"
                   onChange={(evento) => setImagemUrlProduto(evento.target.value)}
                 />
 
-                <button type="submit">Cadastrar produto</button>
+                <button type="submit">{produtoEditando ? 'Salvar alterações' : 'Cadastrar produto'}</button>
+                {produtoEditando && (
+                  <button type="button" onClick={limparFormularioProduto}>
+                    Cancelar edição
+                  </button>
+                )}
               </form>
 
               <h3>Produtos cadastrados</h3>
@@ -675,8 +764,19 @@ src="/logo-hookah29.png"
                     <div>
                       <strong>{produto.marca || 'Sem marca'} — {produto.nome}</strong>
                       <p>Categoria: {produto.categoria}</p>
+                      <p><strong>Status:</strong> {produto.ativo ? 'Disponível' : 'INDISPONÍVEL'}</p>
                     </div>
-                    <strong>{formatarPreco(produto.preco)}</strong>
+                    <div className="acoes-produto-admin">
+                      <strong>{formatarPreco(produto.preco)}</strong>
+                      <button type="button" onClick={() => iniciarEdicaoProduto(produto)}>
+                        Editar produto
+                      </button>
+                      <button type="button" 
+                      onClick={() => alternarDisponibilidade(produto)}>
+                      
+                        {produto.ativo ? 'Marcar indisponível' : 'Reativar produto'}
+                      </button>
+                    </div>
                   </div>
                 ))
               )}
@@ -706,7 +806,7 @@ src="/logo-hookah29.png"
               <div className="titulo-secao">
                 <div>
                   <h2>Nossos produtos</h2>
-                  <p>Confira o que temos disponível</p>
+                  <p>Confira nossos produtos</p>
                 </div>
               </div>
 
@@ -769,6 +869,9 @@ src="/logo-hookah29.png"
                           ) : (
                             <span>{produto.emoji}</span>
                           )}
+                          {!produto.ativo && (
+                            <span className="produto-indisponivel">INDISPONÍVEL</span>
+                          )}
                         </div>
 
                         <div className="produto-info">
@@ -780,19 +883,22 @@ src="/logo-hookah29.png"
                           <div className="produto-rodape">
                             <strong>{formatarPreco(produto.preco)}</strong>
                             <button
-  className={`botao-adicionar ${
-    produtoAdicionado === produto.id ? 'produto-adicionado' : ''
-  }`}
-  onClick={() => adicionarAoCarrinho(produto)}
-  aria-label={`Adicionar ${produto.nome} ao carrinho`}
-  title={
-    produtoAdicionado === produto.id
-      ? 'Produto adicionado!'
-      : `Adicionar ${produto.nome} ao carrinho`
-  }
->
-  {produtoAdicionado === produto.id ? '✓' : '+'}
-</button>
+                              className={`botao-adicionar ${
+                                produtoAdicionado === produto.id ? 'produto-adicionado' : ''
+                              }`}
+                              onClick={() => adicionarAoCarrinho(produto)}
+                              disabled={!produto.ativo}
+                              aria-label={produto.ativo ? `Adicionar ${produto.nome} ao carrinho` : `${produto.nome} indisponível`}
+                              title={
+                                !produto.ativo
+                                  ? 'Produto indisponível'
+                                  : produtoAdicionado === produto.id
+                                    ? 'Produto adicionado!'
+                                    : `Adicionar ${produto.nome} ao carrinho`
+                              }
+                            >
+                              {!produto.ativo ? '×' : produtoAdicionado === produto.id ? '✓' : '+'}
+                            </button>
                           </div>
                         </div>
                       </article>

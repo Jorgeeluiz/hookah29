@@ -1116,6 +1116,10 @@ src="/logo-hookah29.png"
                   <h2>Finalizar pedido</h2>
                   <p>Preencha seus dados para receber seu pedido da HOOKAH29.</p>
 
+                   <p className="aviso-taxa-entrega">
+    ⚠️ <strong>Atenção:</strong> O valor do pedido não inclui a taxa de entrega, que será informada à parte, quando houver.
+  </p>
+
                   {!statusDelivery.aberto && (
                     <p role="alert">
                       O delivery fechou. Não será possível enviar o pedido agora.

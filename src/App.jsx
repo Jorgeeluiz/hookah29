@@ -122,12 +122,57 @@ function App() {
   const [adminAutenticado, setAdminAutenticado] = useState(false)
 
   const [agora, setAgora] = useState(new Date())
-  const statusDelivery = obterStatusDelivery(agora)
+
+  // Controle manual do delivery
+  const [deliveryAtivo, setDeliveryAtivo] = useState(true)
+  const [mensagemDelivery, setMensagemDelivery] = useState(
+    'Delivery temporariamente fechado.'
+  )
+  const [carregandoStatusDelivery, setCarregandoStatusDelivery] = useState(true)
+
+  const statusPorHorario = obterStatusDelivery(agora)
+
+  const statusDelivery = {
+    ...statusPorHorario,
+    aberto: statusPorHorario.aberto && deliveryAtivo,
+    mensagem: !deliveryAtivo
+      ? mensagemDelivery
+      : statusPorHorario.mensagem,
+    proximaAbertura: !deliveryAtivo
+      ? null
+      : statusPorHorario.proximaAbertura,
+  }
 
   // Atualiza o status do delivery automaticamente a cada 30 segundos.
   useEffect(() => {
     const intervalo = setInterval(() => setAgora(new Date()), 30000)
     return () => clearInterval(intervalo)
+  }, [])
+    // Carrega a configuração do delivery salva no Supabase
+  useEffect(() => {
+    async function carregarStatusDelivery() {
+      const { data, error } = await supabase
+        .from('configuracao_delivery')
+        .select('ativo, mensagem')
+        .eq('id', 1)
+        .maybeSingle()
+
+      if (error) {
+        console.error('Erro ao carregar configuração do delivery:', error)
+        alert('Não foi possível carregar o status do delivery.')
+        setCarregandoStatusDelivery(false)
+        return
+      }
+
+      if (data) {
+        setDeliveryAtivo(data.ativo)
+        setMensagemDelivery(data.mensagem)
+      }
+
+      setCarregandoStatusDelivery(false)
+    }
+
+    carregarStatusDelivery()
   }, [])
 
   useEffect(() => {
@@ -145,6 +190,45 @@ function App() {
   }, [])
 
   const categorias = ['Essência', 'Carvão', 'Alumínio', 'Todos']
+    // Ativa ou desativa o delivery manualmente
+  async function alternarDelivery() {
+    const novoStatus = !deliveryAtivo
+
+    const mensagem = novoStatus
+      ? 'Delivery temporariamente fechado.'
+      : 'Delivery temporariamente fechado.'
+
+    const { data, error } = await supabase
+      .from('configuracao_delivery')
+      .update({
+        ativo: novoStatus,
+        mensagem,
+        atualizado_em: new Date().toISOString(),
+      })
+      .eq('id', 1)
+      .select()
+      .maybeSingle()
+
+    if (error) {
+      console.error('Erro ao alterar status do delivery:', error)
+      alert(`Não foi possível alterar o delivery: ${error.message}`)
+      return
+    }
+
+    if (!data) {
+      alert('Nenhuma configuração foi atualizada. Verifique as permissões no Supabase.')
+      return
+    }
+
+    setDeliveryAtivo(data.ativo)
+    setMensagemDelivery(data.mensagem)
+
+    alert(
+      data.ativo
+        ? 'Delivery ativado! Os horários normais continuam valendo.'
+        : 'Delivery desativado! O site não aceitará novos pedidos.'
+    )
+  }
 
   // Carregar produtos ativos do Supabase
   useEffect(() => {
@@ -265,6 +349,13 @@ function App() {
   }
 
  async function alternarDisponibilidade(produto) {
+    const { data: sessaoAtual, error: erroSessao } =
+    await supabase.auth.getSession()
+
+  console.log('SESSÃO ATUAL:', sessaoAtual.session)
+  console.log('ID DO USUÁRIO:', sessaoAtual.session?.user?.id)
+  console.log('E-MAIL:', sessaoAtual.session?.user?.email)
+  console.log('ERRO DA SESSÃO:', erroSessao)
   const novoStatus = !produto.ativo
 
   try {
@@ -370,7 +461,13 @@ function App() {
     evento.preventDefault()
 
     // Confere novamente o horário no momento do envio.
-    const statusAtual = obterStatusDelivery(new Date())
+    const statusAtual = {
+  ...obterStatusDelivery(new Date()),
+  aberto: obterStatusDelivery(new Date()).aberto && deliveryAtivo,
+  proximaAbertura: deliveryAtivo
+    ? obterStatusDelivery(new Date()).proximaAbertura
+    : null,
+}
     if (!statusAtual.aberto) {
       setAgora(new Date())
       alert(
@@ -504,6 +601,40 @@ src="/logo-hookah29.png"
         {mostrarAdmin && adminAutenticado && (
           <section className="painel-admin">
             <h2>Painel Administrativo — HOOKAH29</h2>
+                        <div className="resumo-carrinho">
+              <div>
+                <h3>🚚 Controle do delivery</h3>
+
+                <p>
+                  Status atual:{' '}
+                  <strong>
+                    {carregandoStatusDelivery
+                      ? 'Carregando...'
+                      : deliveryAtivo
+                        ? '🟢 ATIVO (conforme horário)'
+                        : '🔴 DESATIVADO MANUALMENTE'}
+                  </strong>
+                </p>
+
+                <p>
+                  {deliveryAtivo
+                    ? 'O delivery seguirá os horários normais de funcionamento.'
+                    : 'O delivery está pausado até você ativá-lo novamente.'}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                disabled={carregandoStatusDelivery}
+                onClick={alternarDelivery}
+              >
+                {carregandoStatusDelivery
+                  ? 'Carregando...'
+                  : deliveryAtivo
+                    ? '🔴 Desativar delivery'
+                    : '🟢 Ativar delivery'}
+              </button>
+            </div>
             <button
               onClick={async () => {
                 const { error } = await supabase.auth.signOut()

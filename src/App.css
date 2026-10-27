@@ -1502,3 +1502,30 @@ main {
     width: 100%;
   }
 }
+.produto-rodape {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.controle-quantidade {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.controle-quantidade button {
+  width: 35px;
+  height: 35px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.controle-quantidade span {
+  min-width: 20px;
+  text-align: center;
+  font-weight: bold;
+}

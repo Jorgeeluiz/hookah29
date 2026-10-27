@@ -461,13 +461,7 @@ function App() {
     evento.preventDefault()
 
     // Confere novamente o horário no momento do envio.
-    const statusAtual = {
-  ...obterStatusDelivery(new Date()),
-  aberto: obterStatusDelivery(new Date()).aberto && deliveryAtivo,
-  proximaAbertura: deliveryAtivo
-    ? obterStatusDelivery(new Date()).proximaAbertura
-    : null,
-}
+    
     if (!statusAtual.aberto) {
       setAgora(new Date())
       alert(
@@ -1012,25 +1006,38 @@ src="/logo-hookah29.png"
                           <p>{produto.descricao}</p>
 
                           <div className="produto-rodape">
-                            <strong>{formatarPreco(produto.preco)}</strong>
-                            <button
-                              className={`botao-adicionar ${
-                                produtoAdicionado === produto.id ? 'produto-adicionado' : ''
-                              }`}
-                              onClick={() => adicionarAoCarrinho(produto)}
-                              disabled={!produto.ativo}
-                              aria-label={produto.ativo ? `Adicionar ${produto.nome} ao carrinho` : `${produto.nome} indisponível`}
-                              title={
-                                !produto.ativo
-                                  ? 'Produto indisponível'
-                                  : produtoAdicionado === produto.id
-                                    ? 'Produto adicionado!'
-                                    : `Adicionar ${produto.nome} ao carrinho`
-                              }
-                            >
-                              {!produto.ativo ? '×' : produtoAdicionado === produto.id ? '✓' : '+'}
-                            </button>
-                          </div>
+  <strong>{formatarPreco(produto.preco)}</strong>
+
+  <div className="controle-quantidade">
+    <button
+      type="button"
+      onClick={() => alterarQuantidade(produto.id, -1)}
+      disabled={
+        !produto.ativo ||
+        !carrinho.some((item) => item.id === produto.id)
+      }
+      aria-label={`Diminuir quantidade de ${produto.nome}`}
+    >
+      −
+    </button>
+
+    <span>
+      {carrinho.find((item) => item.id === produto.id)?.quantidade || 0}
+    </span>
+
+    <button
+      type="button"
+      className={`botao-adicionar ${
+        produtoAdicionado === produto.id ? 'produto-adicionado' : ''
+      }`}
+      onClick={() => adicionarAoCarrinho(produto)}
+      disabled={!produto.ativo}
+      aria-label={`Adicionar ${produto.nome} ao carrinho`}
+    >
+      +
+    </button>
+  </div>
+</div>
                         </div>
                       </article>
                     ))}

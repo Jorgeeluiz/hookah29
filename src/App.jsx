@@ -462,13 +462,23 @@ function App() {
 
     // Confere novamente o horário no momento do envio.
     
-    if (!statusAtual.aberto) {
-      setAgora(new Date())
-      alert(
-        `O delivery está fechado neste momento. Nosso próximo atendimento será ${statusAtual.proximaAbertura}.`
-      )
-      return
-    }
+    // Confere novamente o horário e o status do delivery.
+const statusAtual = {
+  ...obterStatusDelivery(new Date()),
+  aberto: obterStatusDelivery(new Date()).aberto && deliveryAtivo,
+}
+
+if (!statusAtual.aberto) {
+  setAgora(new Date())
+
+  alert(
+    !deliveryAtivo
+      ? mensagemDelivery
+      : `O delivery está fechado neste momento. Nosso próximo atendimento será ${statusAtual.proximaAbertura}.`
+  )
+
+  return
+}
 
     if (valorTotal < 15) {
       alert(
